@@ -29,7 +29,7 @@ vector_l = c(NA,TRUE,FALSE)
 is.logical(vector_l)
 
 # character
-vector_c = c("hola",'a') #para character se usa '' o ""
+vector_c = c("hola",'a',"2") #para character se usa '' o ""
 is.character(vector_c)
 
 # Datos numericos
@@ -46,7 +46,7 @@ is.integer(vector_i)
 vector_d = c(1e6,2e6)
 is.double(vector_d)
 
-print("puedo consultar el tipo de datos que contiene un objeto usando la función is()").
+cat("puedo consultar el tipo de datos que contiene un objeto usando la función is()")
 
 #==========================#
 # [3.] Estructura de datos #
@@ -73,9 +73,11 @@ print("puedo consultar el tipo de datos que contiene un objeto usando la funció
 abe = c("a","b","c","d","e","f")
 log = c(TRUE,FALSE,TRUE,TRUE,FALSE,FALSE)
 num = c(2,4,6,7,8,9) # los numeros no tiene que ser continuos
+files = list.files()
 
 # Matriz
 matriz = matrix(num, ncol = 3,  nrow = 2 )
+df = data.frame(matriz)
 matriz
 
 ## Listas 
@@ -86,19 +88,30 @@ lista[[1]] = abe
 lista[[2]] = log
 lista[[3]] = num
 lista[[4]] = matriz # matriz que creamos anteriormente
+lista[[5]] = df # dataframe que creamos anteriormente
 lista
 
 ## Dataframes
 
-#dataframe
-
-dataframe = data.frame(log, abe, num, matriz) 
+# dataframe
+dataframe = data.frame(log, abe, num, matriz)
 
 dataframe 
+str(dataframe)
+
+## Manipular vectores
+abe[5]
+
+abe
+
+abe[-5] # Eliminar elemento 5
+
+abe[1:3] # Pedir los 3 primeros elementos
+
 
 ## Manipular matrices
 
-matriz[1,]# todos los elementos en fila 1
+matriz[1,] # todos los elementos en fila 1
 
 
 matriz[,2] # todos los elementos en columna 2
@@ -121,27 +134,45 @@ colnames(matriz)
 rownames(matriz) 
 
 # Asignar nombre a varias columnas
-colnames(matriz) = c("Col 1" , "Col 2", "col 3") 
+colnames(matriz) = c("col_1" , "col_2", "col_3") 
 matriz
 
 # Asignar nombre a una fila en especifico
-rownames(matriz)[2] = "row 2" 
+rownames(matriz)[2] = "row_2" 
+matriz
+
+rownames(matriz) = c("row_1","new_row_2")
 matriz
 
 ## Manipular dataframes
 
 dataframe[1,]# observar una fila
+dataframe
+dataframe[,3]# observar una columna
+
+dataframe$num
 
 # cambiar los nombre de la filla
-rownames(dataframe) = c("row 1","row 2","row 3","row 4","row 5","row 6") 
+rownames(dataframe) = c("row_1","row_2","row_3","row_4","row_5","row_6") 
 
 rownames(dataframe)# observar los nombres de las fillas
+dataframe
 
 ## Manipular listas
+
+lista
 
 lista[[4]] # LLamamos el dato que deseamos
 
 lista[[4]][,2] # seleccionar columna dentro de la matiz
+
+names(lista) = c("vector_character","vector_logical","vector_numerico","matriz","df")
+lista
+
+lista$vector_character
+lista["df"]
+
+
 
 
 
