@@ -3,7 +3,7 @@
 # Fecha de elaboracion: 25/08/2021
 # Ultima modificacion: 25/08/2021
 
-# configuracion inicial
+# configuracion inicial (comentario prueba max)
 rm(list = ls()) # limpia el entorno de R
 if(!require(pacman)) install.packages(pacman)
 require(pacman)
