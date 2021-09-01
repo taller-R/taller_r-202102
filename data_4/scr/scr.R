@@ -2,11 +2,12 @@
 # Colaboradores: 
 # Fecha de elaboracion: 31/08/2021
 # Ultima modificacion: 31/08/2021
+# Version de R: 4.1.0
 
 # configuracion inicial 
 rm(list = ls()) # limpia el entorno de R
 if(!require(pacman)) install.packages("pacman") ; require(pacman) # Instalar la librería pacman
-p_load(rio,readxl,haven,skimr,WriteXLS,tidyverse) # Llamar y/o instalar las librerías de la clase
+p_load(rio,skimr,tidyverse,readxl,haven,WriteXLS) # Llamar y/o instalar las librerías de la clase
 Sys.setlocale("LC_CTYPE", "en_US.UTF-8") # Encoding UTF-8
 
 # skimr:
@@ -38,25 +39,25 @@ browseURL("https://haven.tidyverse.org/" , browser = getOption("browser"))
 ?load
 
 # Importar bases de datos en formato .csv
-data_csv = read.csv(file = "data_4/input/censo 2018.csv" ,sep = ",", header = T, stringsAsFactors = F, skip = 5) 
+data_csv = read.csv(file = "data_4/input/censo 2018.csv" , sep = "," , header = T , stringsAsFactors = F , skip = 5) 
 head(data_csv) # Ver primeras observaciones
 str(data_csv) # Inspeccionar las variables del dataframe
 
 # Importar bases de datos en formato .xls y .xlsx 
 cat("Importar base de datos: hurto-personas-2020_0.xlsx")
-data_xls = read_excel(path = "" , sheet = "Sheet1" , col_names = TRUE, skip = 9) 
+data_xls = read_excel(path = "data_4/output/hurto-personas-2020_0.xlsx" , sheet = "Sheet1" , col_names = T, skip = 9) 
 head(data_xls)
 str(data_xls) 
 
 # Importar bases de datos en formato .dta
 cat("Importar base de datos: Area - Caracteristicas generales (Personas).dta")
-data_dta = read_dta(file = "") 
+data_dta = read_dta(file = "data_4/input/Area - Caracteristicas generales (Personas).dta") 
 head(data_dta)
 str(data_dta)
 
 # Importar bases de datos en formato .rds
 cat("Importar base de datos: proyecciones DANE 2005-2020.rds")
-data_rds = readRDS() 
+data_rds = readRDS("data_4/input/proyecciones DANE 2005-2020.rds") 
 head(data_dta)
 str(data_rds) 
 
@@ -78,7 +79,7 @@ str(data_rdata)
 write.csv(x = data_csv , file = "data_4/output/censo 2018.csv")
 
 # Exportar bases de datos en formato .xls y .xlsx 
-WriteXLS(x = "data_xls", ExcelFileName = "data_4/output/Hurtos 2020.xlsx" , SheetNames =  "Hurtos") 
+WriteXLS(x = data_xls, ExcelFileName = "data_4/output/Hurtos 2020.xlsx" , SheetNames =  "Hurtos") 
 
 # Exportar bases de datos en formato .dta
 write_dta(data = data_dta ,path = "data_4/output/Area - Caracteristicas generales (Personas).dta") 
@@ -89,10 +90,10 @@ saveRDS(object = data_rds, file = "data_4/output/proyecciones DANE 2005-2020.rds
 # xportar varias bases de datos en formato .Rdata 
 save(data_rds,data_dta,data_xls,data_csv,file = "data_4/output/Datos.Rdata")
 
-  
 #-------------------------#
 #         1.2 rio         #
 #-------------------------#
+
 rm(list = ls())# clean enviroment
 
 # Informacion extra
@@ -104,7 +105,7 @@ rm(list = ls())# clean enviroment
 ?rio::import
 
 # Importar bases de datos en formato .csv
-data_csv = import(file = "data_4/input/censo 2018.csv" ,sep = ",", header = T, stringsAsFactors = F, skip = 6) 
+data_csv = import(file = "data_4/input/censo 2018.csv" , sep = "," , header = T, stringsAsFactors = F, skip = 6) 
 
 # Importar bases de datos en formato .xls y .xlsx 
 data_xls = import(file= "data_4/input/hurto-personas-2020_0.xlsx" , sheet = "Sheet1" , col_names = TRUE, skip = 9) 
@@ -144,7 +145,7 @@ export(data_rdata,"data_4/output/Homicidios 2020.Rdata")
 ?rio::convert
 
 # Convertir a formato .csv
-convert("data_4/input/Homicidios 2020.Rdata" ,"data_4/output/Homicidios 2020.csv")
+convert(in_file = "data_4/input/Homicidios 2020.Rdata" ,out_file = "data_4/output/Homicidios 2020_rio.csv")
 
 # Convertir a formato .rds
 convert("data_4/input/hurto-personas-2020_0.xlsx" ,"data_4/output/hurto-personas-2020_0.rds")
@@ -195,7 +196,6 @@ mtcars = filter(mtcars, disp == 160) ## disp = 160
 
 head(mtcars)
 
-
 #-------------------------#
 #      2.2 con pipe       #
 #-------------------------#
@@ -228,11 +228,13 @@ data(mtcars)
 #      3.1 data$var       #
 #-------------------------#
 mtcars$codigo = paste(mtcars$vs,mtcars$am,mtcars$gear,mtcars$carb) # agregamos columnas
+mtcars$nueva = 1
 
 mtcars$vs = NULL # Eliminamos columnas
 mtcars$am = NULL
 mtcars$gear = NULL
 mtcars$carb = NULL
+
 
 head(mtcars)
 
