@@ -43,17 +43,20 @@ head(data_csv) # Ver primeras observaciones
 str(data_csv) # Inspeccionar las variables del dataframe
 
 # Importar bases de datos en formato .xls y .xlsx 
-data_xls = read_excel(path = "data_4/input/hurto-personas-2020_0.xlsx" , sheet = "Sheet1" , col_names = TRUE, skip = 9) 
+cat("Importar base de datos: hurto-personas-2020_0.xlsx")
+data_xls = read_excel(path = "" , sheet = "Sheet1" , col_names = TRUE, skip = 9) 
 head(data_xls)
 str(data_xls) 
 
 # Importar bases de datos en formato .dta
-data_dta = read_dta(file = "data_4/input/Area - Caracteristicas generales (Personas).dta") 
+cat("Importar base de datos: Area - Caracteristicas generales (Personas).dta")
+data_dta = read_dta(file = "") 
 head(data_dta)
 str(data_dta)
 
 # Importar bases de datos en formato .rds
-data_rds = readRDS(file = "data_4/input/proyecciones DANE 2005-2020.rds") 
+cat("Importar base de datos: proyecciones DANE 2005-2020.rds")
+data_rds = readRDS() 
 head(data_dta)
 str(data_rds) 
 
@@ -237,17 +240,18 @@ head(mtcars)
 #--------------------------#
 #3.2 mutate | condicionales#
 #--------------------------#
+
 # creador de numeros aleatorios
 ran = round(rnorm(nrow(iris), mean = 10, sd = 5), digits = 1)
 
 # filtrar variables con filter 
 iris2 = iris %>% filter(Sepal.Width >= 3 & Sepal.Length <= 5.5)
-  head(iris2)
+        head(iris2)
 
 # numero aleatorios mas filtrar las species virginica y setosa
 iris3 = iris %>% 
-  mutate(r_num = ran) %>%
-  filter( Species == "virginica" | Species == "setosa" & r_num >= 10 & r_num <= 15 ) 
+        mutate(r_num = ran) %>%
+        filter(Species == "virginica" | Species == "setosa" & r_num >= 10 & r_num <= 15 ) 
 head(iris3)
 
 # elegir species que no sean virginica
@@ -260,9 +264,9 @@ head(iris4)
 #-------------------------#
 # podemos usar condicionales para crear una nueva columna
 iris5 = iris %>% 
-  mutate(setosa.petal.width = ifelse(test = Species =="setosa", yes = Petal.Width, no = NA)) %>%
-  mutate(virginica.petal.width = ifelse(test = Species !="setosa" & Species !="versicolor", yes = Petal.Width, no = NA)) %>% 
-  mutate(versicolor_setosa.sepal.width = ifelse(test = Species =="versicolor" | Species =="setosa" , yes = Sepal.Width, no = NA))
+        mutate(setosa.petal.width = ifelse(test = Species =="setosa", yes = Petal.Width, no = NA)) %>%
+        mutate(virginica.petal.width = ifelse(test = Species !="setosa" & Species !="versicolor", yes = Petal.Width, no = NA)) %>% 
+        mutate(versicolor_setosa.sepal.width = ifelse(test = Species =="versicolor" | Species =="setosa" , yes = Sepal.Width, no = NA))
 
 head(iris5)  
 
@@ -270,6 +274,7 @@ head(iris5)
 #-------------------------#
 #- 3.4 mutate & substr() -#
 #-------------------------#
+
 # 3.4.1 rellena la variable name_codigo
 data_rds = data_rds %>% fill(name_codigo, .direction = "down") 
 
@@ -277,12 +282,13 @@ data_rds = data_rds %>% fill(name_codigo, .direction = "down")
 substr(x = 'Hola' , start = 2, stop = 4)
 substr(x = 'Hola' , start = 1, stop = 3)
 
-  # te indica en que donde comienza y donde termina el caracter que tienes en el pattern.
-  str_locate(string = "Hola - todos" ,pattern = "-")
-  str_locate(string = "Hola - todos" ,pattern = " -")
-  str_locate(string = "Hola - todos" ,pattern = "- ")
+# te indica en que donde comienza y donde termina el caracter que tienes en el pattern.
+str_locate(string = "Hola - todos" ,pattern = "-")
+str_locate(string = "Hola - todos" ,pattern = " -")
+str_locate(string = "Hola - todos" ,pattern = "- ")
 
 # 3.4.2 separar name & codigo
+
 # columna nombre
 data_rds = data_rds %>% 
   mutate(nombre = 
