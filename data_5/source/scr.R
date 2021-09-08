@@ -77,47 +77,60 @@ dev.off()
 grid.raster(readPNG("data_5/input/pics/maybe.png"))
 
 # llamar el numero de columnas
-c_gen1 %>% select(c(2:10)) %>% colnames() #colnames nos permite ver el nombre de las columnas, solo para simplificacion. 
-c_gen1 %>% select(c(2,3,4,5,9,10)) %>% colnames()
+colnames(c_gen1)
+c_gen1 %>% select(c(2:10)) %>% head() #colnames nos permite ver el nombre de las columnas, solo para simplificacion. 
+c_gen1 %>% select(c(2,3,4,5,9,10)) %>% head()
 
 # Select con parte de una palabra
-c_gen1 %>%  select(starts_with("p60")) %>% colnames()
-c_gen1 %>%  select(ends_with(c("70","60","50"))) %>% colnames()
-c_gen1 %>%  select(contains("60")) %>% colnames()
+c_gen1 %>%  select(starts_with("p60")) %>% head()
+c_gen1 %>%  select(ends_with(c("70","60","50"))) %>% head()
+data = c_gen1 %>%  select(contains("60")) 
+c_gen1 %>%  select(contains("60")) %>% head()
 
 # por  tipo de dato
-c_gen1 %>%  select_if(is.character) %>% colnames()
-c_gen1 %>%  select_if(is.numeric) %>% colnames()
+c_gen1 %>%  select_if(is.character) %>% head()
+c_gen1 %>%  select_if(is.numeric) %>% head()
 
 # Eliminar columnas
-c_gen1 %>%  select(!starts_with(c("p","c"))) %>% colnames()
+c_gen1 %>%  select(!starts_with(c("p","c"))) %>% head()
 
 # minuscula con select_all
-c_gen1 %>% select_all(tolower) %>% colnames()
+c_gen1 %>% select_all(tolower) %>% head()
 
 # selecionar con un vector
 vector_c = c("directorio","secuencia_p","orden","p6020", "p6040", "mes", "p6160", "p6040")
 vector_o = c("directorio","secuencia_p","orden", "p6500", "p6460s1", "p6426", "mes")
 
 c_gen1 = c_gen1 %>% select_all(tolower) %>% select(vector_c) 
+c_gen1 %>% head()
+
 c_gen2 = c_gen2 %>% select_all(tolower) %>% select(vector_c)
+c_gen1 %>% head()
 
 ocu1 = ocu1 %>% select_all(tolower) %>% select(vector_o)
-ocu2 = ocu2 %>% select_all(tolower) %>% select(vector_o)
+ocu1 %>% head()
 
+ocu2 = ocu2 %>% select_all(tolower) %>% select(vector_o)
+ocu2 %>% head()
+
+c_gen3 = c_gen1 %>% select_all(tolower) %>% select(directorio,orden,p6020) 
+c_gen3 %>% head()
 
 #----------------------------#
 #--------- subset -----------#
 #----------------------------#
 
+cat("Poner cuadro con condicionales")
+
 # mayor de 40
-c_gen2 %>% subset(p6040 >= 40) %>% head(20)
+c_gen2 %>% subset(p6040 >= 40) %>% head()
 
 # entre 40 y 60 
-c_gen2 %>% subset(p6040 >= 40 & p6040 >= 60 ) %>% head(20)
+c_gen2 %>% subset(p6040 >= 40 & p6040 <= 60) %>% head()
+c_gen2 %>% subset(p6040 <= 10 | p6040 >= 60) %>% head()
 
 # combinarlo con una una fuuncion similar a select
-c_gen2 %>% subset(p6040 >= 40, select = c(p6020,p6040)) %>% head(20)
+c_gen2 %>% subset(p6040 >= 40, select = c(p6020,p6040)) %>% head()
 
 # drop.na para quitar las filas que contengan valores NA
 is.na(ocu1$p6500) %>% table() # valores que son na = True
@@ -134,11 +147,13 @@ is.na(c_gen1_na) %>% table()
 #--------- filter -----------#
 #----------------------------#
 
+tidyverse_conflicts()
+
 # similar a subset, pero hace parte de tidyverse
-c_gen2 %>% dplyr::filter(p6040 >= 40) %>% select(c(p6020,p6040)) %>% head(10) 
+c_gen2 %>% dplyr::filter(p6040 >= 40) %>% select(c(p6020,p6040)) %>% head() 
 
 # podemos filtrar y quedarnos con los valores NA
-ocu1 %>% dplyr::filter(is.na(p6500)) %>% head(10)
+ocu1 %>% dplyr::filter(is.na(p6500)) %>% head()
 
 # podemos filtrar para quitar los NA, agrupar los valores ens los cuales estamos interesados y sacar el total
 c_gen2 %>% 
@@ -175,7 +190,7 @@ grid.raster(readPNG("data_5/input/pics/Types of join.png"))
 # left_join
 dev.off()
 grid.raster(readPNG("data_5/input/pics/Left join.png"))
-x_left = left_join(c_gen1, ocu1, by = c("directorio","secuencia_p","orden"), suffix = c("", ""))
+x_left = left_join(x = c_gen1, y = ocu1, by = c("directorio","secuencia_p","orden"), suffix = c("_c", "_o"))
 nrow(x_left)
 nrow(c_gen1)
 cat("mantuvo el numero de filas de caracteristicas general ya que es un left join")
@@ -213,7 +228,7 @@ grid.raster(readPNG("data_5/input/pics/bad join.png"))
 # Si no se pone las variables id correctas puedes tener filas duplicadas. 
 
 # una variable de id
-duplicated(c_gen1[,c("directorio")]) %>% table() # duplicate busca dentro si hay duplicados de fillas, table se usa para resumir
+duplicated(c_gen1$directorio) %>% table() # duplicate busca dentro si hay duplicados de fillas, table se usa para resumir
 
 # dos variables de id
 duplicated(c_gen1[,c("directorio","secuencia_p")]) %>% table()
@@ -223,6 +238,7 @@ duplicated(c_gen1[,c("directorio","secuencia_p","orden")]) %>% table()
 
 # Ejemplo de un bad joint
 mal_joint = left_join(c_gen1, ocu1, by = c("directorio","secuencia_p"), suffix = c("", ""))
+new_joint = left_join(c_gen1, ocu1, by = c("directorio","secuencia_p","orden"), suffix = c("", ""))
 nrow(c_gen1)
 nrow(mal_joint)
 cat("las filas se duplicaron")
@@ -233,9 +249,9 @@ cat("las filas se duplicaron")
 #----------------------------#
 
 # podemos pegar los meses 1 y 2 con la funcion bind rows. 
-ocupados_1_2 = bind_rows(x_inner, x_right )
-nrow(ocupados_1_2)
-nrow(x_inner) + nrow(x_right)
+c_gen = bind_rows(c_gen1, c_gen2)
+nrow(c_gen)
+nrow(c_gen1) + nrow(c_gen2)
 
 # Podemos pegar columna con la funcion bind cols
 p1 = ocupados_1_2 %>% select(1:4)
@@ -243,16 +259,16 @@ p2 = ocupados_1_2 %>% select(5:9)
 
 junto = bind_cols(p1, p2)
 
-
 #----------------------------#
 #------- Export data --------#
 #----------------------------#
 export(ocupados_1_2, "data_5/output/ocupados mes 1 & 2.RDS")
 
-
 # Limpiar datos después de esta clase...
 dev.off()
 grid.raster(readPNG("data_5/input/pics/after.png"))
 
-
+# Verificar si existe un elmento de un vector dentro de otro vector
+ocu1$directorio %in% c_gen1$directorio %>% table()
+c_gen1 = c_gen1 %>% mutate(ocupado = ifelse(directorio %in% ocu1$directorio,1,0))
 
