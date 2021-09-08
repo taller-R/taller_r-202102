@@ -14,12 +14,47 @@ Puedes descargar esta clase de 3 diferentes formas:
 
 Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene instalado [Git](https://git-scm.com/downloads) en su equipo. Puedes verificar la versión de [Git](https://git-scm.com/downloads) escribiendo la siguiente línea de código `git --version` sobre la terminal de tu equipo.
 
-# 2. Estructura de la clase
+## Contenido
 
-La clase está orientada a 2 objetivos: 
+* ***Módulo 1:*** Introducción al entorno de trabajo de R
 
-- 2.1. Introducir a los estudiantes sobre los conceptos de R a desarrollar en la clase. La presentación de la clase se encuentran en la carpeta **help** bajo el nombre **intro-to-class.html**.
+  + ***clase-01:*** Introducción a R. [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_1/#/) - [[Ver vídeo aquí]](https://uniandes.sharepoint.com/sites/Section_20212029291/Documentos%20compartidos/General/Recordings/Clase%201-20210811_170740-Grabaci%C3%B3n%20de%20la%20reuni%C3%B3n.mp4?web=1)
 
-- 2.2. Aplicar los conceptos vistos en clase. Para cumplir con este objetivo, el estudiante deberá revisar el script de la clase que se encuentra en la carpeta **scr** y resolver algunos task que se encuentran a los largo de este.
+  + ***clase-02:*** Rstudio y GitHub. [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_2/#/) - [[Ver vídeo aquí]]()
+  
+  + ***clase-03:*** Estructuras de datos en R. [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_3/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_3)
+  
+* ***Módulo 2:*** Tidyverse
 
+  + ***clase-04:*** Tidy-data parte 1 [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_4/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_4)
 
+  + ***clase-05:*** Tidy-data parte 2 [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_5/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_5)
+
+  + ***clase-06:*** Tidy-data parte 3
+
+  + ***clase-07:*** Visualización de información
+
+* ***Módulo 3:*** Loops y funciones
+
+  + ***clase-08:*** Bucles
+  
+  + ***clase-09:*** Funciones en R
+
+* ***Módulo 4:***  Regresiones
+     
+  + ***clase-10:*** Regresiones
+  
+* ***Módulo 5:*** GIS en R
+    
+  + ***clase-11:*** Introducción a GIS en R
+  
+  + ***clase-12:*** Operaciones geométricas
+  
+  + ***clase-13:*** Introducción a imágenes satelitales
+  
+* ***Módulo 6:*** Otras aplicaciones
+   
+  + ***clase-14:*** Introducción a web scraping
+
+  + ***clase-15:*** Rmarkdonw y Shiny
+  
