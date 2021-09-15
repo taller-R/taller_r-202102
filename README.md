@@ -30,7 +30,7 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
 
   + ***clase-05:*** Tidy-data parte 2 [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_5/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_5)
 
-  + ***clase-06:*** Tidy-data parte 3
+  + ***clase-06:*** Tidy-data parte 3 [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_6/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_6)
 
   + ***clase-07:*** Visualización de información
 
