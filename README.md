@@ -32,7 +32,7 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
 
   + ***clase-06:*** Tidy-data parte 3 [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_6/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_6)
 
-  + ***clase-07:*** Visualización de información
+  + ***clase-07:*** Visualización de información (ggplot2) [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_7/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_7)
 
 * ***Módulo 3:*** Loops y funciones
 
