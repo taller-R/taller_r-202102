@@ -14,7 +14,6 @@ Sys.setlocale("LC_CTYPE", "en_US.UTF-8") # Encoding UTF-8
 #-------------------------------------#
 
 # utilizaremos los datos de ocupados de la clase pasada
-
 ocu_1_2 = import(file = "data_6/input/ocupados mes 1 & 2.RDS")
 
 skimr::skim(ocu_1_2) # Un resumen de los datos
@@ -60,16 +59,17 @@ browseURL("https://dplyr.tidyverse.org/reference/summarise.html", browser = getO
 #-------------------------------------#
 
 # Media
-mean(ocu_1_2$p6500, na.rm = TRUE)
-ocu_1_2 %>% summarise( media = mean(p6500, na.rm = TRUE)) 
+mean(ocu_1_2$p6500, na.rm = T)
+ocu_1_2 %>% summarise(media = mean(p6500, na.rm = TRUE)) 
 
 # Mediana
 median(ocu_1_2$p6500, na.rm = TRUE)
-ocu_1_2 %>% summarise( mediana = median(p6500, na.rm = TRUE)) 
+ocu_1_2 %>% summarise(media = mean(p6500, na.rm = T) ,
+                      mediana = median(p6500, na.rm = T)) 
 
 # frecuencia
 table(ocu_1_2$p6020) 
-ocu_1_2 %>%summarise(total = table(p6020)) 
+ocu_1_2 %>% summarise(total = table(p6020)) 
 
 # Quartiles
 quantile(ocu_1_2$p6500, na.rm = TRUE)
@@ -83,14 +83,16 @@ ocu_1_2 %>% summarise(quartiles = quantile(p6500, na.rm = TRUE))
 # 1 variable
 dev.off()
 grid.raster(readPNG("data_6/input/pics/one_var.png"))
-ocu_1_2 %>% group_by(p6020) %>% summarise(total = table(p6160)) # cantidad de hombres y mujeres ocupados que leen. 
+
+ocu_1_2 %>% group_by(p6020) %>% summarise(total = table(p6160))            
+mean_sex = ocu_1_2 %>% group_by(p6020,p6160) %>% summarise(conteo = n()) # cantidad de hombres y mujeres ocupados que leen. 
 
 ocu_1_2 %>% group_by(p6020) %>% summarise(ingresos_promedio = mean(p6500, na.rm = TRUE)) # ingresos promedios de los hombres y mujeres
 
 # 2 variables
 dev.off()
 grid.raster(readPNG("data_6/input/pics/two_var.png"))
-ocu_1_2 %>%  group_by(p6020, p6160)  %>% summarise(total = table(p6020),  ingresos_promedio = mean(p6500, na.rm = TRUE))  # cantidad de hombres y mujeres ocupados que saben escribir y sus ingresos promedios
+ocu_1_2 %>%  group_by(p6020, p6160)  %>% summarise(ingresos_promedio = mean(p6500, na.rm = TRUE))  # cantidad de hombres y mujeres ocupados que saben escribir y sus ingresos promedios
 
 #-------------------------------------#
 #- group_by() + mutate() + summarize -#
@@ -105,6 +107,10 @@ poblacion_sexo = ocu_1_2 %>%
                   summarise(total = table(p6020))
 
 poblacion_sexo
+
+# Agregar variable con el ingreso promedio de cada vivienda
+ingreso_hogar = ocu_1_2 %>% group_by(directorio) %>% mutate(ingreso_hogar = mean(p6500,na.rm=T))
+
 
 #---------------------------------- 2 variables -------------------------------#
 
@@ -166,15 +172,14 @@ browseURL("https://lectures-r.gitlab.io/lecture_6/#/pivot",browser = getOption("
 # 2 columnas -> 2 columnas
 poblacion_sexo
 
-wide_poblacion_sexo= poblacion_sexo %>% pivot_wider(names_from = p6020, 
-                                                    values_from = total )  
+wide_poblacion_sexo = poblacion_sexo %>% pivot_wider(names_from = p6020, 
+                                                     values_from = total )  
 wide_poblacion_sexo
 
 # 3 columnas -> 3 columnas pero menos filas
 rango_sexo
 
-wide_rango_sexo = rango_sexo %>% pivot_wider(id_cols= c(rango,p6020), 
-                                             names_from = p6020, 
+wide_rango_sexo = rango_sexo %>% pivot_wider(names_from = p6020, 
                                              values_from = total )  
 wide_rango_sexo
 
