@@ -3,11 +3,10 @@
 # Fecha de elaboracion: 19/09/2021
 # Ultima modificacion: 19/09/2021
 
-
 # configuracion inicial 
 rm(list = ls()) # limpia el entorno de R
 if(!require(pacman)) install.packages("pacman") ; require(pacman) # Instalar la librería pacman
-p_load(rio, RColorBrewer, tidyverse, ggthemes , skimr) # Llamar y/o instalar las librerías de la clase
+p_load(tidyverse , rio , skimr , RColorBrewer , ggthemes , hrbrthemes , igraph) # Llamar y/o instalar las librerías de la clase
 
 #------------------------------------------------------------------------------#
 #------------- 1.0 Gratificos con el paquete base & dividir pantalla ----------#
@@ -45,11 +44,11 @@ hist(df$year)
 
 #---- Layout permite dividir el área de graficar en sectores
 
-# divida en 4 partes
+# divida en 3 partes
 layout(matrix(c(1:3,3), nrow=2, byrow= FALSE))
 layout.show(3)
 
-# divida en 5  partes
+# divida en 4  partes
 layout(matrix(c(1:4), nrow=2, byrow= FALSE))
 layout.show(4)
 
@@ -92,18 +91,23 @@ iris %>% head() # utilizaremos la base de iris, incluida en el paqete base
 ggplot(iris) # ggplot funciona por medio de capas cada "+" es una capa diferente
 
 #------ pintamos sobre la primera capa
-ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) + geom_point() 
+ggplot() + geom_point(data = iris, show.legend = T , col = "red" , 
+                      aes(x=Sepal.Length, y=Sepal.Width)) 
 
 #------ pintamos sobre la segunda capa
-ggplot(iris) + geom_point(aes(x=Sepal.Length, y=Sepal.Width)) 
+ggplot(data = iris) + geom_point(aes(x=Sepal.Length, y=Sepal.Width)) 
 
 #------ para mantener cambiar los ejes
-ggplot(iris) + geom_point(aes(x=Sepal.Length, y=Sepal.Width)) + coord_flip()
+ggplot(iris) + geom_point(aes(y=Sepal.Length, x=Sepal.Width)) 
+
+ggplot(data = iris) + 
+  geom_point(aes(x=Sepal.Length, y=Sepal.Width, shape = Species)) + 
+  coord_flip() + coord_equal()
 
 #------ podemos incluir colores
-ggplot(iris) + 
-geom_point(aes(x=Sepal.Length, y=Sepal.Width, colour = Species)) + 
-coord_flip() + coord_equal()
+ggplot(data = iris) + 
+geom_point(aes(x=Sepal.Length, y=Sepal.Width, colour = Species , shape = Species)) + 
+coord_equal()
 
 #----------------------------#
 #----- 2.1 ggplot:advance ---#
@@ -112,7 +116,7 @@ coord_flip() + coord_equal()
 # para simplificar pondremos este código lo pondremos dentro de una variable de tal manera que cuando llamemos a la variable nos de la gráfica
 graph_1 = ggplot(iris) + 
           geom_point(aes(x=Sepal.Length, y=Sepal.Width, colour = Species)) + 
-          coord_flip()
+          coord_equal()
 graph_1
 
 #------ scale colour
@@ -124,7 +128,7 @@ graph_1 + scale_colour_manual(values  = c("blue","grey","black"))
 
 
 # scale_fill_brewer
-graph_2 = graph_1 + scale_colour_brewer(palette = "Reds") # reescribimos variable para simplificar
+graph_2 = graph_1 + scale_colour_brewer(palette = "Blues") # reescribimos variable para simplificar
 
 graph_2
 
@@ -134,6 +138,8 @@ graph_2
 
 # Tema solarized
 graph_2 + theme_solarized(light = FALSE) 
+graph_2 + theme_few()
+graph_2 + theme_pander() + scale_colour_pander()
 
 # Tema stata
 graph_3 = graph_2 + theme_stata() + scale_colour_stata() # el anterior scale colour fue reemplazado por este color de scale_colour_stata
@@ -143,8 +149,8 @@ graph_3
  graph_4 = graph_3 + labs(title = "Grafica Iris", 
                      subtitle = "Sepal",
                      caption = "Fuente: Iris",
-                     x = "Ancho", 
-                     y = "Largo", 
+                     y = "Ancho del sepalo", 
+                     x = "Largo del sepalo", 
                      colour = "Especie")
  graph_4
  
@@ -155,8 +161,8 @@ graph_3
 
 # utilizaremos las siguientes dos base de datos
 
-base_1 = import("Data_7/Input/rango_sexo.rds")
-base_2 = import("Data_7/Input/desempleados_1_6.rds") 
+base_1 = import("data_7/input/rango_sexo.rds")
+base_2 = import("data_7/input/desempleados_1_6.rds") 
 
 #--------- Grafica de barras
 # ggplot funciona con columnas, por ende tenemos que cambiarlo a formato long
@@ -164,7 +170,7 @@ base_1 = pivot_longer(base_1, cols = c(hombre,mujer), names_to = "sexo", values_
 
 
 # grafica
-graph_5 = ggplot(base_1,aes(x = rango , y = total, fill = sexo)) + # en ves de poner colour ponemos fill
+graph_5 = ggplot(data = base_1 , aes(x = rango , y = total , fill = sexo)) + # en ves de poner colour ponemos fill
           geom_bar(stat = "identity", position = "dodge") +  
           geom_text(aes(label = total),   # fill para poner la cantidad encima
                     position=position_dodge(width=0.9), #  ajusta la posicion 
@@ -196,15 +202,14 @@ base_3 = base_2 %>%
 # graficamos 
 graph_6 = base_3 %>%
             ggplot( aes(x=as.character(mes), y=total, group=p6020, color=p6020)) +
-            geom_line(size=1, linetype= 3) +
+            geom_line(size=1) +
             labs(title = "Desempleados",
                  caption = "Informacion obtenida de la GEIH/2019",
                  x = "Mes", 
                  y = "Total",
                  colour = "") +
-            theme_light() +
-            scale_colour_economist()+
-            theme(plot.title = element_text(hjust = 0.5), legend.position="right")
+            theme_light() + theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+            scale_color_canva()
 graph_6
 
 #--------- Grafica circular
@@ -243,16 +248,17 @@ graph_7
 #--------------------------------#
 
 ### Como jpeg
-ggsave(plot=graph_1, file = "Data_7/output/ejemplo_1.jpeg")
-ggsave(plot=graph_2, file = "Data_7/output/ejemplo_2.jpeg")
-ggsave(plot=graph_3, file = "Data_7/output/ejemplo_3.jpeg")
-ggsave(plot=graph_4, file = "Data_7/output/ejemplo_4.jpeg")
-ggsave(plot=graph_5, file = "Data_7/output/ejemplo_5.jpeg")
-ggsave(plot=graph_6, file = "Data_7/output/ejemplo_6.jpeg")
-ggsave(plot=graph_7, file = "Data_7/output/ejemplo_7.jpeg")
+ggsave(plot=graph_1, file = "data_7/output/ejemplo_1.jpeg")
+ggsave(plot=graph_2, file = "data_7/output/ejemplo_2.png")
+ggsave(plot=graph_3, file = "data_7/output/ejemplo_3.pdf")
+ggsave(plot=graph_4, file = "data_7/output/ejemplo_4.tiff")
+ggsave(plot=graph_5, file = "data_7/output/ejemplo_5.jpeg")
+ggsave(plot=graph_6, file = "data_7/output/ejemplo_6.jpeg")
+ggsave(plot=graph_7, file = "data_7/output/ejemplo_7.jpeg")
 
 
 
 #-------------------------- extra task ----------------------------------------#
 print("Encuente la manera de dividir he hacer una grafica compartida") 
+
 
