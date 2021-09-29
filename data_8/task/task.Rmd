@@ -29,11 +29,11 @@ pacman::p_load(here,knitr,ggthemes)
 opts_chunk$set(fig.align="center", fig.height=4 , dpi=300 , cache=F) # chunk options
 ```
 
-# Ejercisio 1
+# Ejercicio 1
 <html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
 
 
-## Ejercisio
+## Ejercicio
 
 1. escriba un loop que sume todos los números dentro de un vector, EJ:
 
@@ -48,7 +48,7 @@ sum
 ```
 
 <!------------------------------>
-## Ejercisio Respuesta
+## Ejercicio Respuesta
 
 ```{r, eval=FALSE}
 vector = c(1:100)
@@ -61,12 +61,12 @@ sum
 ```
 
 <!------------------------------>
-<!-------- Ejercisio 2 -------->         
+<!-------- Ejercicio 2 -------->         
 <!------------------------------>
-# Ejercisio 2
+# Ejercicio 2
 <html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
 
-## Ejercisio
+## Ejercicio
 
 2. escriba un loop que imprima la tabla de multiplicación de un numero EJ:
 
@@ -81,7 +81,7 @@ while (x <= 10) {
 }
 ```
 <!------------------------------>
-## Ejercisio Respuesta
+## Ejercicio Respuesta
 
 ```{r, eval=FALSE}
 x = 0
@@ -94,13 +94,13 @@ while (x <= 10) {
 ```
 
 <!------------------------------>
-<!-------- Ejercisio 3 --------->         
+<!-------- Ejercicio 3 --------->         
 <!------------------------------>
-# Ejercisio 3
+# Ejercicio 3
 <html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
 
 <!------------------------------>
-## Ejercisio
+## Ejercicio
 
  3. escriba una funcion que repita la cantidad de veces indicada en el numero mas los numeros antes de este. ej:
 ```{r, echo=FALSE}
@@ -125,7 +125,7 @@ while(x <= reps) {
 }
 ```
 <!------------------------------>
-## Ejercisio Respuesta
+## Ejercicio Respuesta
 
 ```{r, eval = FALSE}
 x = 0
@@ -150,13 +150,13 @@ while(x <= reps) {
 ```
 
 <!------------------------------>
-<!-------- Ejercisio 4 --------->         
+<!-------- Ejercicio 4 --------->         
 <!------------------------------>
-# Ejercisio 4
+# Ejercicio 4
 <html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
 
 <!------------------------------>
-## Ejercisio
+## Ejercicio
 
 4. escriba un loop que imprima las filas de mtcars que tiene un carburador >=  4 o == 1
 ```{r, echo=FALSE}
@@ -174,7 +174,7 @@ repeat{
 }
 ```
 <!------------------------------>
-## Ejercisio Respuesta
+## Ejercicio Respuesta
 
 ```{r, eval=FALSE}
 total = 0
@@ -194,11 +194,11 @@ repeat{
 <!-------- Ejercicio 5 --------->         
 <!------------------------------>
 
-# Ejercisio 5
+# Ejercicio 5
 <html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
 
 <!------------------------------>
-## Ejercisio (importar baes de datos)
+## Ejercicio (importar baes de datos)
 
 1. Use las librerías *tidyverse* y *rio*
 
@@ -212,7 +212,7 @@ repeat{
 
 
 <!------------------------------>
-## Ejercisio Respuesta
+## Ejercicio Respuesta
 
 ```{r, eval=FALSE}
 # Una pista de como empezar
