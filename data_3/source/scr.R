@@ -92,6 +92,8 @@ lista[[5]] = df # dataframe que creamos anteriormente
 lista
 
 ## Dataframes
+cat("Además de los datos que están en esas filas y columnas un data.frame tiene dos atributos (metadatos): 
+     los nombres de columna y los nombres de filas.")
 
 # dataframe
 dataframe = data.frame(log, abe, num, matriz)

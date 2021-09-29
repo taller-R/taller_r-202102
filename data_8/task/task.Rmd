@@ -1,0 +1,260 @@
+---
+pagetitle: "Task clase 8"
+title: "\nTaller de R: Estadística y programación\n"
+subtitle: "\nTask clase 8\n"
+author: "\nEduard F. Martínez-González\n"
+date: "Universidad de los Andes | [ECON-1302](https://github.com/taller-R)"
+output: 
+  revealjs::revealjs_presentation:  
+    theme: simple 
+    highlight: tango
+    center: true
+    nature:
+      transition: slide
+      self_contained: false # para que funcione sin internet
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+      showSlideNumber: 'all'
+    seal: true # remover la primera diapositiva (https://github.com/yihui/xaringan/issues/84)
+    # Help 1: https://revealjs.com/presentation-size/  
+    # Help 2: https://bookdown.org/yihui/rmarkdown/revealjs.html
+    # Estilos revealjs: https://github.com/hakimel/reveal.js/blob/master/css/theme/template/theme.scss
+---
+
+```{r setup, include=F , cache=F}
+# load packages
+library(pacman)
+pacman::p_load(here,knitr,ggthemes)
+opts_chunk$set(fig.align="center", fig.height=4 , dpi=300 , cache=F) # chunk options
+```
+
+# Ejercisio 1
+<html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
+
+
+## Ejercisio
+
+1. escriba un loop que sume todos los números dentro de un vector, EJ:
+
+```{r, echo=FALSE}
+vector = c(1:100)
+sum = 0
+
+for (i in vector) {
+  sum = sum + i 
+}
+sum
+```
+
+<!------------------------------>
+## Ejercisio Respuesta
+
+```{r, eval=FALSE}
+vector = c(1:100)
+sum = 0
+
+for (i in vector) {
+  sum = sum + i 
+}
+sum
+```
+
+<!------------------------------>
+<!-------- Ejercisio 2 -------->         
+<!------------------------------>
+# Ejercisio 2
+<html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
+
+## Ejercisio
+
+2. escriba un loop que imprima la tabla de multiplicación de un numero EJ:
+
+
+```{r, echo=FALSE}
+x = 0
+num = 2
+while (x <= 10) {
+  result = paste(num,"x",x, "=", num * x)
+  print(result)
+  x = x + 1 
+}
+```
+<!------------------------------>
+## Ejercisio Respuesta
+
+```{r, eval=FALSE}
+x = 0
+num = 2
+while (x <= 10) {
+  result = paste(num,"x",x, "=", num * x)
+  print(result)
+  x = x + 1 
+}
+```
+
+<!------------------------------>
+<!-------- Ejercisio 3 --------->         
+<!------------------------------>
+# Ejercisio 3
+<html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
+
+<!------------------------------>
+## Ejercisio
+
+ 3. escriba una funcion que repita la cantidad de veces indicada en el numero mas los numeros antes de este. ej:
+```{r, echo=FALSE}
+x = 0
+break_num = 0
+reps = 6
+
+while(x <= reps) {
+  x = x + 1
+  num  = ""
+  if(x <= reps){
+    repeat{
+      num = paste0(num, x)
+      break_num = break_num + 1
+      if(x == break_num){
+        break_num = 0
+        print(num)
+        break
+      }
+    }
+  }
+}
+```
+<!------------------------------>
+## Ejercisio Respuesta
+
+```{r, eval = FALSE}
+x = 0
+break_num = 0
+reps = 6
+
+while(x <= reps) {
+  x = x + 1
+  num  = ""
+  if(x <= reps){
+    repeat{
+      num = paste0(num, x)
+      break_num = break_num + 1
+      if(x == break_num){
+        break_num = 0
+        print(num)
+        break
+      }
+    }
+  }
+}
+```
+
+<!------------------------------>
+<!-------- Ejercisio 4 --------->         
+<!------------------------------>
+# Ejercisio 4
+<html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
+
+<!------------------------------>
+## Ejercisio
+
+4. escriba un loop que imprima las filas de mtcars que tiene un carburador >=  4 o == 1
+```{r, echo=FALSE}
+total = 0
+repeat{
+  total = total + 1
+  
+  if (mtcars[total, "carb"] >= 4 | mtcars[total, "carb"] == 1 ){
+    print(mtcars[total,])
+    print("----------------------------------------------------")
+  }
+  if (total == nrow(mtcars)){
+    break
+  }
+}
+```
+<!------------------------------>
+## Ejercisio Respuesta
+
+```{r, eval=FALSE}
+total = 0
+repeat{
+  total = total + 1
+  
+  if (mtcars[total, "carb"] >= 4 | mtcars[total, "carb"] == 1 ){
+    print(mtcars[total,])
+    print("----------------------------------------------------")
+  }
+  if (total == nrow(mtcars)){
+    break
+  }
+}
+```
+<!------------------------------>
+<!-------- Ejercicio 5 --------->         
+<!------------------------------>
+
+# Ejercisio 5
+<html><div style='float:left'></div><hr color='#000099' size=3px width=850px></html>
+
+<!------------------------------>
+## Ejercisio (importar baes de datos)
+
+1. Use las librerías *tidyverse* y *rio*
+
+2. Descargue los archivos de el siguiente link: [clic aquí](https://www.dropbox.com/sh/o6edda8hmfooate/AACYr4N1wkwL9IMVTgUHAJpya?dl=0). Este link contiene las bases de datos con los registros oficiales de los delitos reportados en Colombia entre 2010-2019 y fueron tomados de: [GICRI](https://www.policia.gov.co/grupo-información-criminalidad/estadistica-delictiva)
+
+3. Usando las funciones list.files() y algunas de las funciones vistas en clases anteriores, intente cargar por medio de un loop todas las bases de datos (sugiero alojar cada base de datos dentro de una posición de un objeto tipo lista). Dentro del loop Limpie los nombres de las variables.
+
+4. Después intente agruparlas en 3 dataframes por tipo de delito: homicidios, h_personas y h_motos. 
+
+5. Exporte los 3 objetos que contienen los dataframe (hágalo en formato .rds).
+
+
+<!------------------------------>
+## Ejercisio Respuesta
+
+```{r, eval=FALSE}
+# Una pista de como empezar
+rm(list = ls())
+setwd("~/datos descargados/")
+require(pacman)
+p_load(tidyverse,rio)
+
+# Lista con nombres de los archivos
+lista_archivos <- list()
+file_archivos <- list.files(".")
+
+# Este es el ejercicio
+i = 1
+for (j in file_archivos){
+     base <- import(path = j)
+     names <- base[9,] %>% as.character() %>% tolower() %>% gsub(" ","",.)
+     colnames(base) <- names
+     lista_archivos[[i]] <- base
+     i = i + 1
+     rm(base)
+}
+``
+```
+
+
+
+<!--- HTML style --->
+<style type="text/css">
+.reveal .progress {background: #CC0000 ; color: #CC0000}
+.reveal .controls {color: #CC0000}
+.reveal h1.title {font-size: 2.4em;color: #CC0000; font-weight: bolde}
+.reveal h1.subtitle {font-size:2.0em ; color:#000000}
+.reveal section h1 {font-size:1.8em ; color:#CC0000 ; font-weight:bolder ; vertical-align:middle}
+.reveal section h2 {font-size:1.4em ; color:#CC0000 ; font-weight:bolde ; text-align:left}
+.reveal section h3 {font-size:1.1em ; color:#00000 ; font-weight:bolde ; text-align:left}
+.reveal section h4 {font-size:1.0em ; color:#00000 ; font-weight:bolde ; text-align:left}
+.reveal section h5 {font-size:0.9em ; color:#00000 ; font-weight:bolde ; text-align:left}
+.reveal section p {font-size:0.7em ; color:#00000 ; text-align:left}
+.reveal section a {font-size:0.8em ; color:#000099 ; text-align:left}
+.reveal section div {align="center";}
+.reveal ul {list-style-type:disc ; font-size:1.0em ; color:#00000 ; display: block;}
+.reveal ul ul {list-style-type: square; font-size:0.8em ; display: block;}
+.reveal ul ul ul {list-style-type: circle; font-size:0.8em ; display: block;}
+</style>

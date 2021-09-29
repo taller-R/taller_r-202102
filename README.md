@@ -36,7 +36,7 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
 
 * ***Módulo 3:*** Loops y funciones
 
-  + ***clase-08:*** Bucles
+  + ***clase-08:*** Bucles [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_8/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_8)
   
   + ***clase-09:*** Funciones en R
 
