@@ -30,15 +30,15 @@ View(storms) # utilizaremos la base datos storms que provine del package de tidy
 
 # Usando "for" podemos imprimir el cuadrado de 1:5
 vector =  c(1:8)
-
 for (i in vector){ # no tiene que ser i, puede ser x, r, hola...
-  i = i*i  # Sobreescribe i como el resultado de i*i
-  print(i) # Pinta el resultado sobre la consola
+     producto = i*i  # Sobreescribe i como el resultado de i*i
+     print(producto) # Pinta el resultado sobre la consola
 }
 
 # imprimamos las descriptivas de la base de datos 
-for(i in colnames(storms)){
-  print(i) %>% summary(storms[,i]) %>% print()# podemos utilizar pipe
+for (i in colnames(storms)){
+    print(i)
+    summary(storms[,i]) %>% print() # podemos utilizar pipe
 }
 
 #--------------------------------#
@@ -47,31 +47,32 @@ for(i in colnames(storms)){
 
 # imprimamos las tormentas de 
 j = 1
-
 while (j <= 10) { # condición
-  print(j) 
-  j = j+1 # sobrescribir j como j + 1, observemos que sucede si retiramos el 1. 
+       print(j) 
+       j = j+1 # sobrescribir j como j + 1, observemos que sucede si retiramos el 1. 
 }
 
 # numero de filas hasta 1979 en la base de datos
 i = 1
 while (storms[i:nrow(storms),"year"] <= 1979) { # condición
-  print(i)
-  i = i + 1
+       print(i)
+       i = i + 1
 }
 
 #--------------------------------#
 #------- 1.3 Usando repeat ------#
 #--------------------------------#
+
+#
 set.seed(0117) # fijar semilla
 
 # generando números aleatorios mayores a 8
 repeat{
-  m = rnorm(n=1 , mean=10 , sd=2) # generar un número aleatorio (media 10 , sd 2) 
-  print(m) # pintar el número sobre la consola
-  if (m <= 8){ # condicional que se activa si número es menor o igual a 8
-    break # detener el loop si m es menor o igual a 8 
-  } 
+       m = rnorm(n=1 , mean=10 , sd=2) # generar un número aleatorio (media 10 , sd 2) 
+       print(m) # pintar el número sobre la consola
+      if (m <= 8){ # condicional que se activa si número es menor o igual a 8
+        break # detener el loop si m es menor o igual a 8 
+      } 
 }
 
 #------------------------------------------------------------------------------#
@@ -93,21 +94,35 @@ vocal = c("a","e","i","o","u")
 
 #Usando solo if
 for (j in abc) {
-  print(j)
-  if (j %in% vocal){
-    print(paste0(j," - es una vocal"))
-  }
+     print(j)
+     if (j %in% vocal){
+         print(paste0(j," - es una vocal"))
+     }
 }
 
 #Usando if y else
 for (letra in abc) {
-  if (letra %in% vocal){
-    print(paste(letra," - Es una vocal"))
-  }
-  else {
-    print(paste(letra," - NO es una vocal")) 
+     if (letra %in% vocal){
+         print(paste(letra," - Es una vocal"))
+     }
+     else {
+           print(paste(letra," - NO es una vocal")) 
+     } 
+}
+
+# Usando if y else
+var_letras = letters[runif(n = nrow(storms) ,min =1 ,max = 26) %>% round()]
+data = storms %>% mutate(letra = var_letras , clasificacion = "") 
+for (fila in 1:nrow(data)) {
+     if (data[fila,"letra"] %in% vocal){
+        data[fila,"clasificacion"] = "vocal" 
+     }
+    else {
+         data[fila,"clasificacion"] = "no vocal" 
   } 
 }
+
+
 
 #--------------------------------#
 #---------- 2.2. Next -----------#
@@ -125,13 +140,12 @@ storms_location = as.data.frame(storms[1,1:7])
 r = 1
 repeat{
   r = r + 1
-  
-  if (storms[n ,2] >= 1980  ){next
+  if (storms[r ,"year"] >= 1980  ){
     break
   }
   
   else{
-    storms_location = rbind(storms_location, storms[n ,1:7])
+    storms_location = rbind(storms_location, storms[r,1:7])
   }
 }
 
