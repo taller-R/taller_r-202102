@@ -29,11 +29,10 @@ browseURL(url = "https://www.r-bloggers.com/2016/02/functions-exercises/", brows
 
 unidor = function(x, y){
          palabra = paste(x ,y) %>% toupper()
-          
          return(palabra)
 }
 
-unidor(x = "hola", y = "clase")
+unidor(x = "hola", y = "mundo")
 
 #--------------------------------#
 #-------- usando un loop --------#
@@ -56,6 +55,7 @@ vocales = function(frase) {
 }
 
 vocales(frase = "hola clase")
+
 #------------------------------------------------------------------------------#
 #----------------------------- Message, warnings, errors ----------------------#
 #------------------------------------------------------------------------------#
@@ -71,48 +71,64 @@ browseURL(url = "https://adv-r.hadley.nz/conditions.html", browser = getOption("
 #--------------------------------#
 
 # funcion que divide un numero hasta que este sea un numero impar
-div = function(num, divisor){
-  
-      original = num
-      print(num)
-      count = 0
-      
-      while (num %% divisor == 0) {
-          num = num / divisor
-          print(num)
-          count = count + 1
-      }
-       message("el numero ", original, " se puede dividir por ", divisor, ", " , count, if(count == 1){" vez"} else{" veces"})   
+num_2 = function(x){
+        c = x*x
+return(c)
 }
 
-div(num = 23360, divisor = 2)
-div(num = 23360, divisor = 1) # observemos que pasa si dividimos por 1
+num_2(x = 4)
+num_2(x = "A")
 
+
+# funcion que divide un numero hasta que este sea un numero impar
+num_2 = function(numero){
+  
+        # si es un numero
+        if (is.numeric(numero)){
+            c = numero*numero
+            return(c)
+        }
+  
+        # si no es un numero
+        if (is.numeric(numero)==F){
+            warning(paste0(numero," no es un número"))
+        }
+}
+num_2(numero = 10)
+num_2(numero = "hola")
+num_2(numero = "10")
+  
 #--------------------------------#
 #------------- stop -------------#
 #--------------------------------#
 
-# para solucionar el anterior problema utilizamos stop
-
-div_2 = function(num, divisor){
-        
-        original = num
-        
-        if (divisor == 1) {
-          stop("el numero ", original, " se puede dividir por 1, infinitamente" )
+# funcion que divide un numero hasta que este sea un numero impar
+num_2 = function(numero){
+  
+        # si es un numero
+        if (is.numeric(numero)){
+            c = numero*numero
+        return(c)
         }
-        print(num)
-        count = 0
         
-        while (num %% divisor == 0) {
-          num = num / divisor
-          print(num)
-          count = count + 1
+        # si no es un numero
+        if (is.character(numero)){
+            new_num = as.numeric(numero)
+            
+            if (is.na(new_num)==F){
+                c = new_num*new_num
+                warning(paste0(numero," fue convertido a número"))
+                return(c)
+            }
+             
+            if (is.na(new_num)==T){
+               stop(paste0(numero," no pudo ser convertido a número"))
+            } 
         }
-        message("el numero ", original, " se puede dividir por ", divisor, ", " , count, if(count == 1){" vez"} else{" veces"})   
 }
-
-div_2 (num = 23360, divisor = 1)
+num_2(numero = 10)
+num_2(numero = "5")
+num_2(numero = "hola")
 
 
 #------------------------------------------------------------------------------#
@@ -133,15 +149,21 @@ browseURL(url = "https://www.datacamp.com/community/tutorials/r-tutorial-apply-f
 
 # Operaciones por columnas
 apply(X = mtcars, MARGIN = 2, FUN = summary) # margin 1 se realiza en por columnas, el dos funciona por medio de filas
-apply(X = mtcars, MARGIN = 2, function(papa) summary(papa)) # se puede escribir en dos maneras diferentes y realiza el mismo efecto, no importa el nombre dentro de los parentesis
+
+# esto es equivalente a la linea 150
+for (i in 1:ncol(mtcars)){
+     summary(mtcars[,i]) %>% print()
+}
+
+apply(X = mtcars, MARGIN = 2, function(x) num_2(numero = x )) 
 
 #  Operaciones por filas
-apply(X = quakes[1:10,], MARGIN = 1, function(x)  min(x))
+apply(X = mtcars, MARGIN = 1, function(x)  min(x))
 
 #--------------------------------#
 #----------- sapply() -----------#
 #--------------------------------#
-descritivas_s = sapply(X = quakes, function(x) summary(x)) # retorna un vector o matrix, funciona por columnas 
+descritivas_s = sapply(X = mtcars, summary) # retorna un vector o matrix, funciona por columnas 
 
 descritivas_s
 
@@ -149,10 +171,25 @@ descritivas_s
 #----------- lapply() -----------#
 #--------------------------------#
 descritivas_l = lapply(iris, function(x) summary(x)) # retorna siempre en estilo fila
+descritivas_l %>% print()
 
 descritivas_l[[1]] # llamamos por el numero de la lista
 
 descritivas_l[["Sepal.Width"]] # llamamos por el nombre de la lista
+descritivas_l$Sepal.Length # llamamos por el nombre de la lista
+
+
+# otro ejemplo de lapply
+storms
+lapply(storms , function(x) table(x))
+
+lapply(storms , function(x) is.na(x)  %>% table())
+
+# replace NA
+df = storms
+replace_na = function(var){  var = ifelse(is.na(var)==T,0,var) }
+df = lapply(df, function(x) replace_na(var = x)) %>% data.frame()
+
 
 
 #------------------------------------------------------------------------------#
