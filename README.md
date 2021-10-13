@@ -38,7 +38,7 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
 
   + ***clase-08:*** Bucles [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_8/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_8)
   
-  + ***clase-09:*** Funciones en R
+  + ***clase-09:*** Funciones en R [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_9/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_9)
 
 * ***Módulo 4:***  Regresiones
      
