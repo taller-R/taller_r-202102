@@ -46,8 +46,8 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
   
 * ***Módulo 5:*** GIS en R
     
-  + ***clase-11:*** Introducción a GIS en R
-  
+  + ***clase-11:*** Introducción a datos espaciales en R [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_11/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_11)
+
   + ***clase-12:*** Operaciones geométricas
   
   + ***clase-13:*** Introducción a imágenes satelitales

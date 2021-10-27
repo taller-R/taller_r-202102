@@ -36,7 +36,8 @@ df = read.csv("https://nyc-tlc.s3.amazonaws.com/trip+data/green_tripdata_2020-12
 
 # lm function
 ?lm
-lm(total_amount ~ trip_distance + passenger_count , data = df) 
+lm(formula = total_amount ~ trip_distance + passenger_count , data = df) 
+lm(formula = total_amount ~ trip_distance + passenger_count - 1, data = df) 
 
 # Linear regression
 ols = lm(total_amount ~ trip_distance + passenger_count , data = df) 
@@ -55,7 +56,7 @@ hist(ols$residuals)
 
 # get predict values
 ols %>% predict()
-df$predict_ols = predict(object = ols,newdata=df)
+df$predict_ols = predict(object = ols , newdata=df )
 
 #=================#
 # 2. Subset datos #
@@ -65,7 +66,7 @@ df$predict_ols = predict(object = ols,newdata=df)
 ggplot(data=df) + geom_point(aes(x=trip_distance,y=total_amount)) + theme_bw()
 
 # subset data
-df_s = subset(df,trip_distance<1000)
+df_s = df %>% subset(trip_distance<1000) %>% subset(total_amount<300)
 ggplot(data=df_s) + geom_point(aes(x=trip_distance,y=total_amount)) + theme_bw()
 
 # new estimations
@@ -88,42 +89,50 @@ ols_stata = lm_robust(total_amount ~ trip_distance + passenger_count , data = df
 ols_stata %>% tidy(conf.int = TRUE)
 
 # Print the HAC VCOV
-ols_hac = coeftest(ols, vcov = NeweyWest)
+ols_hac = coeftest(ols, vcov = NeweyWest) # library lmtest
 ols_hac %>% tidy(conf.int = TRUE)
 
 # cluster standar errors
-# ols_cluster = lm_robust(total_amount ~ trip_distance + passenger_count , data=df_s , clusters=passenger_count)
-# ols_cluster
+#ols_cluster = lm_robust(total_amount ~ trip_distance + passenger_count , data=df_s , clusters=passenger_count)
+#ols_cluster
 
 #==========================================#
 # 4. Dummy variables and interaction terms #
 #==========================================#
 
 # categoricla variables
-lm(total_amount ~ trip_distance + passenger_count + as.factor(payment_type), data=df_s)
+lm(total_amount ~ trip_distance + passenger_count + as.factor(payment_type), data=df_s) %>% 
+        summary()
 
 # include interaction terms
 cat("x1:x2 = x1 × x2")
 cat("x1/x2 = x1 + x1:x2")
 cat("x1*x2 = x1 + x2 + x1:x2")
-lm(total_amount ~ trip_distance:passenger_count, data=df_s)
-lm(total_amount ~ trip_distance/passenger_count, data=df_s)
-lm(total_amount ~ trip_distance*passenger_count, data=df_s)
+lm(total_amount ~ trip_distance:passenger_count, data=df_s)%>% 
+        summary()
+lm(total_amount ~ trip_distance/passenger_count, data=df_s)%>% 
+        summary()
+lm(total_amount ~ trip_distance*passenger_count, data=df_s)%>% 
+        summary()
 
 #=====================#
 # 5. Marginal effects #
 #=====================#
 
 # make output var
-df = df %>% mutate(pay_credit = ifelse(payment_type==1,1,0))
+df_s = df_s %>% mutate(pay_credit = ifelse(payment_type==1,1,0))
 
 # logit
-logit = glm(pay_credit ~ trip_distance + passenger_count , data = df , family = binomial(link = "logit")) 
+logit = glm(pay_credit ~ trip_distance + passenger_count , data = df_s , family = binomial(link="logit")) 
 logit %>% summary()
 
 # probit
-probit = glm(pay_credit ~ trip_distance + passenger_count , data = df , family = binomial(link = "probit")) 
+probit = glm(pay_credit ~ trip_distance + passenger_count , data = df_s , family = binomial(link = "probit")) 
 probit %>% summary()
+
+# ols
+ols_lineal = lm(pay_credit ~ trip_distance + passenger_count , data = df_s) 
+ols_lineal %>% summary()
 
 # marginal effects
 logit_marg = margins(logit)
@@ -147,7 +156,7 @@ stargazer(ols, ols2,
           out = paste0('data_10/output/ols.text'))
 
 # coefplot
-mods = list('Logit' = logit_marg , 'Probit' = probit_marg)
+mods = list('Logit' = logit_marg , 'Probit' = probit_marg , "OLS" = ols_lineal)
 
 modelplot(mods) + coord_flip() + 
 labs(title = "Probability to pay with credit card" , subtitle = "Comparing models")
@@ -167,6 +176,10 @@ labs(y="",x="Effect on total amount")
 ggplot(df_s, aes(x = trip_distance, y = total_amount)) +
 geom_point(alpha = 0.7) +
 geom_smooth(method="lm" , se=T) + theme_bw()
+
+ggplot(df_s, aes(x = trip_distance, y = total_amount)) +
+        geom_point(alpha = 0.7) +
+        geom_smooth(method="loess" , se=T) + theme_bw()
 
 
 
