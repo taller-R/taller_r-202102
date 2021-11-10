@@ -7,7 +7,7 @@
 # initial configuration
 rm(list=ls())
 require(pacman) # llamar pacman
-p_load(tidyverse,sf,osmdata,sp,ncdf4,raster,stars,viridis,leaflet,png,grid) # llamar y/o instalar librerias
+p_load(tidyverse,sf,osmdata,sp,viridis,leaflet,png,grid,ncdf4,raster,stars) # llamar y/o instalar librerias
 
 # raster: raster(), stack() 
 # stars: read_stars()
@@ -20,6 +20,7 @@ p_load(tidyverse,sf,osmdata,sp,ncdf4,raster,stars,viridis,leaflet,png,grid) # ll
 # Night lights and economic growth
 dev.off()
 grid.raster(readPNG("pics/Indonesia.png")) # Tomado de: Measuring Economic Growth from Outer Space
+dev.off()
 grid.raster(readPNG("pics/Rwanda.png")) # Tomado de: Measuring Economic Growth from Outer Space
 browseURL("https://www.aeaweb.org/articles?id=10.1257/aer.102.2.994") # Ir a: Measuring Economic Growth from Outer Space
 
@@ -79,13 +80,26 @@ medellin = opq(bbox = getbb("Medellín Colombia")) %>%
            add_osm_feature(key = "boundary", value = "administrative") %>% osmdata_sf()
 medellin = medellin$osm_multipolygons
 medellin = medellin  %>% dplyr::filter(admin_level==7) %>%  dplyr::filter(name=="Zona Urbana Medellín")
+
 ggplot() + geom_sf(data=medellin , col="red") + theme_bw() 
+leaflet(medellin) %>% addTiles() %>% addPolygons(fillColor="green",fill="green",weight=2)
 
 luces_medellin_1 = st_crop(luces_s,medellin) # crop luces de Colombia con polygono de Medellin
 
 ggplot() + geom_stars(data=luces_medellin_1 , aes(y=y,x=x,fill=date_202003)) + # plot raster
 scale_fill_viridis(option="A" , na.value='white') +
 geom_sf(data=medellin , fill=NA , col="green") + theme_bw() 
+
+# Otro ejemplo
+alpujarra = st_as_sf(x = read.table(text="-75.5833719546466  6.232428773972284"),
+                 coords = c(1,2) , crs = "+proj=longlat +datum=WGS84")
+
+luces_alpujarra = st_crop(luces_medellin_1,alpujarra)
+
+ggplot() + geom_stars(data=luces_medellin_1 , aes(y=y,x=x,fill=date_202003)) + # plot raster
+scale_fill_viridis(option="A" , na.value='white') +
+geom_sf(data=medellin , fill=NA , col="green") +
+geom_sf(data=alpujarra , col="blue") + theme_bw() 
 
 #==========================#
 # [3.] Extraer informacion #
@@ -135,7 +149,7 @@ luces_medellin_sf = st_as_sf(x = luces_medellin, as_points = T, na.rm = T) # ras
 luces_medellin_sf
 
 ggplot() + geom_sf(data = luces_medellin_sf , aes(col=date_202002))  + 
-scale_fill_viridis(option="A" , na.value='white') +
+scale_color_viridis(option="A" , na.value='white') +
 geom_sf(data=medellin , fill=NA , col="green") + theme_bw() 
 
 luces_medellin_sf2 = st_as_sf(x = luces_medellin, as_points = F, na.rm = T) # raster to sf (polygons)
@@ -148,9 +162,7 @@ geom_sf(data = building , col=NA , fill="green")
 luces_building_2 = st_join(x=building , y=luces_medellin_sf2 , largest=F) # join layers
 
 ## variacion promedio 
-df = luces_building_2
-
-st_geometry(df) = NULL
+df = tibble(luces_building_2) 
 
 df %>% group_by(building) %>% 
 summarise(pre=mean(date_202002,na.rm=T) , post=mean(date_202003,na.rm=T))
