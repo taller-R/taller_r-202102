@@ -42,15 +42,15 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
 
 * ***Módulo 4:***  Regresiones
      
-  + ***clase-10:*** Regresiones
+  + ***clase-10:*** Regresiones [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_10/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_10)
   
 * ***Módulo 5:*** GIS en R
     
   + ***clase-11:*** Introducción a datos espaciales en R [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_11/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_11)
 
-  + ***clase-12:*** Operaciones geométricas
+  + ***clase-12:*** Operaciones geométricas [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_12/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_12)
   
-  + ***clase-13:*** Introducción a imágenes satelitales
+  + ***clase-13:*** Introducción a imágenes satelitales [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_13/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_13)
   
 * ***Módulo 6:*** Otras aplicaciones
    
