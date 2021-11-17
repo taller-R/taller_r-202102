@@ -54,7 +54,7 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
   
 * ***Módulo 6:*** Otras aplicaciones
    
-  + ***clase-14:*** Introducción a web scraping
+  + ***clase-14:*** Introducción a web scraping [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_14/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_14)
 
   + ***clase-15:*** Rmarkdonw y Shiny
   
