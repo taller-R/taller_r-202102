@@ -38,7 +38,7 @@ texto
 ### 1.3.2. Usando los atributos del elemento
 myhtml %>% html_nodes(css = ".toctext") %>% html_text() # Extraemos los subtitulos de la pagina
 
-myhtml %>% html_nodes(".toctext") %>% html_text() # Si no le indicamos que es un css, R reconoce que es un css
+myhtml %>% html_nodes("h3") %>% html_text() # Si no le indicamos que es un css, R reconoce que es un css
 
 myhtml %>% html_nodes(xpath = ".toctext") %>% html_text() # Pero si usamos el xpath comete un error
 
@@ -57,7 +57,7 @@ link = html_nodes(link,"a") # Extraer elementos que contienen un link (los que t
 
 link = html_attr(link,'href') %>% as.data.frame() %>% setNames("link") # Extraer solo el link (atributo ref del elemento)
 
-link = link %>% dplyr::filter(substr(.$link,1,4)=="http") # Filtrar solo los enlaces
+link = link %>% filter(substr(.$link,1,4)=="http") # Filtrar solo los enlaces
 View(link) 
 
 #------------------------------------#
@@ -102,10 +102,11 @@ html_i %>% html_nodes("#abstract-body") %>% html_text()
 "Creemos un dataframe para almacenar la informacion"
 df_documentos = data.frame(titulo = rep(NA,nrow(link)),
                             autores = rep(NA,nrow(link)),
-                            abstrac = rep(NA,nrow(link)))
+                            abstrac = rep(NA,nrow(link)),
+                             url = rep(NA,nrow(link)))
 
 "hagamos el loop"
-for (i in 42:52){
+for (i in 1:nrow(link)){
     
     "definiendo url"
     url_i = link[i,1]
@@ -121,14 +122,13 @@ for (i in 42:52){
     
     "Extrayendo autores del documento"
     df_documentos[i,3] = html_i %>% html_nodes("#abstract-body") %>% html_text()
+    
+    df_documentos[i,4] = url_i
 }
 
 "veamos el resultado"
 View(df_documentos)
-df_documentos[47:52,3]
 
-"verifiquemos"
-link[50,1]
 
 #----------------------------------#
 #  3. Aplicacion (extraer tablas)  # 
