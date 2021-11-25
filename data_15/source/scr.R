@@ -93,8 +93,8 @@ abstrac %>% head()
 
 # detectar codificacion
 stri_enc_mark(abstrac)
-stri_enc_isascii(df$abstrac)
-stri_enc_isutf8(df$abstrac)
+stri_enc_isascii(abstrac)
+stri_enc_isutf8(abstrac)
 
 # recodificar
 stri_enc_mark("Ábcdêãçoàúü") 
@@ -104,8 +104,10 @@ stri_encode(abstrac,"UTF-8", "ASCII") %>% head()
 
 stri_trans_general(abstrac, "Latin-ASCII") %>% head() 
 
+stri_trans_general("Ahí está la Economía", "Latin-ASCII")
 abstrac[5]
 Encoding(abstrac) = "ASCII"
+stri_enc_mark(abstrac)
 abstrac[5]
 
 # Vamos a limpiar nuestros caracteres
@@ -117,7 +119,7 @@ abstrac[5]
 ## Eliminar carcateres especiales
 str_remove_all(string="Washington (D.C.)" , pattern="[^[:alnum:] ]")
 str_replace_all(string="Washington (D.C.)" , pattern="[^[:alnum:] ]" , replacement="")
-abstrac = str_remove_all(string=abstrac , pattern="[^[:alnum:] ]")
+abstrac = str_replace_all(string=abstrac , pattern="[^[:alnum:] ]" , replacement=" ")
 
 ## Eliminar  acentos
 stri_trans_general("Ahí está la Economía", "Latin-ASCII")
@@ -150,8 +152,8 @@ trimws(" Hola como estas ")
 abstrac = trimws(abstrac)
 
 ## Verificar cuantos caracteres se eliminaron
-abstrac[10] %>% nchar()
-df$abstrac[10] %>% trimws() %>% nchar()
+abstrac[5] %>% nchar()
+df$abstrac[5] %>% trimws() %>% nchar()
 
 abstrac[10]
 df$abstrac[10] %>% trimws()
@@ -182,7 +184,7 @@ dim(matrix_abstrac)
 view(matrix_abstrac)
 
 # Sumemos la frecuencia de cada palabra
-frec_words = sort(rowSums(matrix_abstrac),decreasing=TRUE) 
+frec_words = sort(rowSums(matrix_abstrac),decreasing=T) 
 class(frec_words)
 df_words = data.frame(word = names(frec_words) , n = frec_words)
 
@@ -196,5 +198,5 @@ wordcloud(words = df_words$word, freq = df_words$n, min.freq = 6,
   
 
 wordcloud(words = df_words$word, freq = df_words$n, min.freq = 1,
-          max.words = 300 , random.order = T ,colors = brewer.pal(10, "Dark2"))
+          max.words = 2000 , random.order = F ,colors = brewer.pal(10, "Dark2"))
 
