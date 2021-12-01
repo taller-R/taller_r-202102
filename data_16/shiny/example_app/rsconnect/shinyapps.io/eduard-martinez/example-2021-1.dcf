@@ -1,0 +1,13 @@
+name: example-2021-1
+title: example-2021-1
+username:
+account: eduard-martinez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4156702
+bundleId: 4618097
+url: https://eduard-martinez.shinyapps.io/example-2021-1/
+when: 1621466210.88982
+lastSyncTime: 1621466210.88984
+asMultiple: FALSE
+asStatic: FALSE

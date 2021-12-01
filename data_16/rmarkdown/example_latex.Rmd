@@ -1,0 +1,41 @@
+---
+title: "Taller de R: Estadística y Programación"
+author: "Taller 3"
+date: "`r Sys.Date()`"
+pagetitle: 
+output:
+       pdf_document: default
+---
+
+<!-- Configuración de la consola de R -->
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T , eval = T , warning = T)
+```
+
+En este taller se evalúan los módulos 4, 5 y 6 del curso. Se presentan 2 tipos de taller (A y B), pero usted solo debe desarrollar 1 de ellos. Para realizar este trabajo, podrá hacer grupo de hasta tres personas. Sea creativo en su código (no hay una respuesta única, todos los métodos que permitan obtener la misma respuesta son validos). Cuando encuentre una ayuda en línea que le permita solucionar algún problema, no olvide citar la fuente. Por último, lea atentamente las instrucciones del taller.
+
+<!------------------->
+<!-- Instrucciones -->
+<!------------------->
+
+\section{Instrucciones}
+\begin{itemize}
+\item No seguir las instrucciones tiene una penalización del \textbf{10\%} de la nota total.
+\item Al recibir el taller, uno de los integrantes del grupo debe crear un repositorio llamado \textbf{task-3} para almacenar las respuestas del taller. Este repositorio debe contener como mínimo las siguientes carpetas: \textbf{data}, \textbf{scr} y \textbf{views}. El usuario que crea el repositorio debe invitar como colaborador a los demas integrantes del grupo y al usuario \textcolor{cyan}{\href{https://github.com/eduard-martinez}{eduard-martinez}}.
+\end{itemize}
+
+<!-------------->
+<!-- Taller A -->
+<!-------------->
+\begin{center} \textcolor{blue}{\section{Taller A}} \end{center}
+
+# 1. Datos espaciales (50%)
+
+Toda la información empleada en esta parte del taller fue tomada del Marco Geoestadistico Nacional - MGN del DANE. Puede consultar los datos \textcolor{cyan}{\href{https://geoportal.dane.gov.co/servicios/descarga-y-metadatos/descarga-mgn-marco-geoestadistico-nacional/}{aquí}}. 
+
+\textbf{1.1. Importar datos espaciales}
+
+\textbf{1.1.1} De la carpeta \textit{data/outpu} importe los shapefiles de VIAS (llame al objeto \textit{via}) y MGN_URB_TOPONIMIA (llame al objeto \textit{puntos}). El primero contiene las vías del departamento de Norte de Santander y el segundo la ubicación de algunos servicios públicos (hospitales, policía,...) y comerciales (restaurantes, tiendas,...). 
+
+
+

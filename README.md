@@ -58,5 +58,6 @@ Nota: Para hacerlo de las formas **1.2.** o **1.3.** debe verificar si ya tiene 
 
   + ***clase-15:*** Introducción al analisis de texto [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_15/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_15)
   
-  + ***clase-16:*** Rmarkdonw y Shiny
+  + ***clase-16:*** Rmarkdonw y Shiny [[Ver presentación aquí]](https://lectures-r.gitlab.io/lecture_16/#/) - [[Ver vídeo aquí]]() - [[Ver códigos aquí]](https://github.com/taller-R/data_r/tree/master/data_16)
+  
   

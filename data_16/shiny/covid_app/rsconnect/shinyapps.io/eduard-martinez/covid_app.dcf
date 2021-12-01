@@ -1,0 +1,12 @@
+name: covid_app
+title: covid_app
+username:
+account: eduard-martinez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3303376
+bundleId: 3906976
+url: https://eduard-martinez.shinyapps.io/covid_app/
+when: 1606349175.65825
+asMultiple: FALSE
+asStatic: FALSE

@@ -1,0 +1,68 @@
+---
+title: Documento de ejemplo
+output: 
+       pdf_document: default
+       #html_document: default
+---
+
+<!-- Configuración de la consola de R -->
+```{r , include=F}
+# Confi
+require(pacman)
+p_load(tidyverse,kableExtra,sf,viridis,ggsn,ggnewscale)
+
+# Load data
+shape = st_read(dsn = 'input/UPZ.shp') %>% subset(UPlTipo==1) %>%
+        mutate(cod_upz=gsub('[^0-9]','',UPlCodigo) %>% as.numeric()) %>% .[,c('cod_upz','UPlNombre')]
+
+data = readRDS('input/Casos por upz.rds') %>% 
+       dplyr::select(cod_upz,casos_03,casos_04,casos_05,casos_06,casos_07,casos_08,casos_09)
+
+shape = merge(shape,data,'cod_upz',all.x=T)
+```
+
+# Titulo
+
+Este es el titulo del docuemnto
+
+## Subtitulo
+
+Este es el subtitulo del documento
+
+### Código de R
+
+Solo el resultado 
+
+```{r , eval=T , echo=F}
+hist(shape$casos_04)
+```
+
+Resultado y codigo
+
+```{r , eval=T , echo=T}
+letters
+print('Hola')
+```
+
+### Cargar imagen
+
+[](input/run_class.gif)
+
+
+Hola a todos [clic aquí](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+
+### Mapa 
+
+Hasta ahora solo esta mostrando el código pero no lo está evaluando.
+
+```{r , eval=T , echo=F}
+# Pintar el mapa
+ggplot() + geom_sf(data = shape , color = 'gray', aes(fill=casos_06), size = 0.5 ,) + 
+scale_fill_viridis(name="Casos",na.value = "white",direction = 1,option = 'inferno') +
+ggsn::north(data = shape , location = "topleft") + 
+ggsn::scalebar(data = shape, dist = 5, dist_unit = "km",transform = T, model = "WGS84",location = "bottomleft") +
+ggtitle('Casos de Covid-19 en junio por UPZ') + xlab('') + ylab('') + 
+theme_bw()
+```
+
+<h1> Hola </h1> 
